@@ -6,7 +6,7 @@ OpenJDK 1.8 (JRE 8u242) 版本基于的Ubuntu系统的Docker镜像。
 
 ## 基本信息
 
-* 镜像地址：endial/openjdk:v8u242-jre
+* 镜像地址：endial/openjdk:8u242-jre
   * 依赖镜像：endial/ubuntu:v18.04
 
 
@@ -18,7 +18,7 @@ OpenJDK 1.8 (JRE 8u242) 版本基于的Ubuntu系统的Docker镜像。
 基本验证命令：
 
 ```shell
-docker run -it --rm endial/openjdk:v8u242-jre java -version
+docker run -it --rm endial/openjdk:8u242-jre java -version
 ```
 
 
