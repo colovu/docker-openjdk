@@ -7,7 +7,7 @@ OpenJDK 1.8 (JDK 8u242) 版本基于的Ubuntu系统的Docker镜像。
 ## 基本信息
 
 * 镜像地址：endial/openjdk:8u242-jdk
-* 依赖镜像：endial/ubuntu:v18.04
+  * 依赖镜像：endial/ubuntu:18.04
 
 
 

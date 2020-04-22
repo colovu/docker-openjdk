@@ -1,20 +1,17 @@
-FROM endial/ubuntu:v18.04
+FROM endial/ubuntu:18.04
 
-ENV JAVA_VERSION 8u242
-ENV JAVA_URL_VERSION 8u242b08
-ENV JAVA_BASE_URL https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u242-b08/OpenJDK8U-jre_
+ENV JAVA_VERSION=8u242 \
+	JAVA_URL_VERSION=8u242b08 \
+	JAVA_BASE_URL="https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u242-b08/OpenJDK8U-jre_" \
+	LANG=C.UTF-8 \
+	JAVA_HOME=/usr/local/openjdk-8 \
+	PATH=${JAVA_HOME}/bin:${JAVA_HOME}/jre/bin:${PATH}
 
 LABEL \
 	"Version"="v8u242" \
 	"Description"="Docker images for openJDK 8u242 based on Ubuntu 18.04." \
 	"Dockerfile"="https://github.com/endial/docker-openjdk" \
 	"Vendor"="Endial Fang (endial@126.com)"
-
-# Default to UTF-8 file.encoding
-ENV LANG C.UTF-8
-
-ENV JAVA_HOME /usr/local/openjdk-8
-ENV PATH ${JAVA_HOME}/bin:${PATH}
 
 RUN set -eux; \
 	mkdir -p ${JAVA_HOME}; \
