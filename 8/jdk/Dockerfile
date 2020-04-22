@@ -5,7 +5,7 @@ ENV JAVA_VERSION=8u242 \
 	JAVA_BASE_URL="https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u242-b08/OpenJDK8U-jdk_" \
 	LANG=C.UTF-8 \
 	JAVA_HOME=/usr/local/openjdk-8 \
-	PATH=${JAVA_HOME}/bin:${PATH}
+	PATH=/usr/local/openjdk-8/bin:${PATH}
 
 LABEL \
 	"Version"="v8u242" \
