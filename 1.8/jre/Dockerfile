@@ -1,4 +1,4 @@
-FROM endial/ubuntu:18.04
+FROM colovu/ubuntu:18.04
 
 ENV JAVA_VERSION=8u242 \
 	JAVA_URL_VERSION=8u242b08 \
@@ -10,7 +10,7 @@ ENV JAVA_VERSION=8u242 \
 LABEL \
 	"Version"="v8u242" \
 	"Description"="Docker images for openJDK 8u242 based on Ubuntu 18.04." \
-	"Dockerfile"="https://github.com/endial/docker-openjdk" \
+	"Dockerfile"="https://github.com/colovu/docker-openjdk" \
 	"Vendor"="Endial Fang (endial@126.com)"
 
 RUN set -eux; \
