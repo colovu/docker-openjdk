@@ -1,15 +1,15 @@
 FROM colovu/ubuntu:18.04
 
-ENV JAVA_VERSION=8u242 \
-	JAVA_URL_VERSION=8u242b08 \
-	JAVA_BASE_URL="https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u242-b08/OpenJDK8U-jdk_" \
+ENV JAVA_VERSION=8u252 \
+	JAVA_URL_VERSION=8u252b09 \
+	JAVA_BASE_URL="https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_" \
 	LANG=C.UTF-8 \
 	JAVA_HOME=/usr/local/openjdk-8 \
 	PATH="/usr/local/openjdk-8/bin:${PATH}"
 
 LABEL \
-	"Version"="v8u242" \
-	"Description"="Docker images for openJDK 8u242 based on Ubuntu 18.04." \
+	"Version"="v${JAVA_VERSION}" \
+	"Description"="Docker images for openJDK jdk-${JAVA_VERSION} based on Ubuntu 18.04." \
 	"Dockerfile"="https://github.com/colovu/docker-openjdk" \
 	"Vendor"="Endial Fang (endial@126.com)"
 

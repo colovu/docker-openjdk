@@ -8,8 +8,8 @@ ENV JAVA_VERSION=8u242 \
 	PATH="/usr/local/openjdk-8/bin:/usr/local/openjdk-8/jre/bin:${PATH}"
 
 LABEL \
-	"Version"="v8u242" \
-	"Description"="Docker images for openJDK 8u242 based on Ubuntu 18.04." \
+	"Version"="v${JAVA_VERSION}" \
+	"Description"="Docker images for openJDK jre-${JAVA_VERSION} based on Ubuntu 18.04." \
 	"Dockerfile"="https://github.com/colovu/docker-openjdk" \
 	"Vendor"="Endial Fang (endial@126.com)"
 
