@@ -38,7 +38,7 @@ RUN set -eux; \
 	apt install -y --no-install-recommends ${fetchDeps}; \
 	\
 	curl --progress-bar -o openjdk.tgz.asc "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz.sign"; \
-	curl --progress-bar -o openjdk.tgz "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz" --progress=dot:giga; \
+	curl --progress-bar -o openjdk.tgz "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz"; \
 	\
 # 下载方式安装软件，使用GPG签名方式验证软件
 	export GPG_KEYS="0xEAC843EBD3EFDB98CC772FADA5CD6035332FA671"; \
