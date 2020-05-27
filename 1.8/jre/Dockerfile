@@ -41,7 +41,7 @@ RUN set -eux; \
 	curl --progress-bar -L -o openjdk.tgz "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz"; \
 	\
 # 下载方式安装软件，使用GPG签名方式验证软件
-	export GPG_KEYS="0xEAC843EBD3EFDB98CC772FADA5CD6035332FA671"; \
+	export GPG_KEYS="0xCA5F11C6CE22644D42C6AC4492EF8D39DC13168F 0xEAC843EBD3EFDB98CC772FADA5CD6035332FA671"; \
 	export GNUPGHOME="$(mktemp -d)"; \
 	for key in ${GPG_KEYS}; do \
 		gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "${key}"|| \
