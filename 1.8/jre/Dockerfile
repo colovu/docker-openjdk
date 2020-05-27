@@ -14,24 +14,26 @@ LABEL \
 	"Vendor"="Endial Fang (endial@126.com)"
 
 RUN set -eux; \
-	mkdir -p ${JAVA_HOME}; \
-	\
 # 设置程序使用静默安装，而非交互模式；类似tzdata等程序需要使用静默安装
 	export DEBIAN_FRONTEND=noninteractive; \
+	\
+	mkdir -p ${JAVA_HOME}; \
+	\
+	apt update; \
+	apt-get install -y --no-install-recommends ca-certificates p11-kit; \
 	\
 # 更新源，并安装临时使用的软件包（使用完后可删除）
 	fetchDeps=" \
 		bzip2 \
 		unzip \
 		xz-utils \
-		ca-certificates p11-kit \
 # 签名验证工具
 		dirmngr \
 		gnupg \
 		fontconfig libfreetype6 \
 		wget \
 	"; \
-	apt update; \
+	savedAptMark="$(apt-mark showmanual)"; \
 	apt install -y --no-install-recommends ${fetchDeps}; \
 	\
 	wget -O openjdk.tgz.asc "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz.sign"; \
@@ -72,12 +74,24 @@ RUN set -eux; \
 	find "$JAVA_HOME/lib" -name '*.so' -exec dirname '{}' ';' | sort -u > /etc/ld.so.conf.d/docker-openjdk.conf; \
 	ldconfig; \
 	\
-# 删除临时软件包，清理缓存
-	apt purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false ${fetchDeps}; \
-	apt autoclean -y; \
+# 查找新安装的应用依赖软件包，并标识为'manual'，防止后续自动清理时被删除
+	apt-mark auto '.*' > /dev/null; \
+	{ [ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; }; \
+	find /usr/local -type f -executable -exec ldd '{}' ';' \
+		| awk '/=>/ { print $(NF-1) }' \
+		| sort -u \
+		| xargs -r dpkg-query --search \
+		| cut -d: -f1 \
+		| sort -u \
+		| xargs -r apt-mark manual; \
+	\
+# 删除安装的临时依赖软件包，清理缓存
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false ${fetchDeps}; \
+	apt-get autoclean -y; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
+# 验证安装的软件是否可以正常运行，常规情况下放置在命令行的最后
 	java -version;
 
 
-CMD []
+CMD [ "/bin/bash" ]
