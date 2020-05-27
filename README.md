@@ -4,11 +4,13 @@ OpenJDK 1.8 (8u242) 版本基于的Ubuntu系统的Docker镜像。
 
 **JDK 版本信息：**
 
-- 1.8、8u242-jdk、latest
+- 1.8、8u252-jdk
+- 1.8、8u242-jdk
 
 **JRE 版本信息：**
 
-- 1.8、8u242-jre、latest
+- 1.8、8u252-jre
+- 1.8、8u242-jre
 
 
 
