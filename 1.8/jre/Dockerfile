@@ -5,7 +5,7 @@ ENV JAVA_VERSION=8u242 \
 	JAVA_BASE_URL="https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u242-b08/OpenJDK8U-jre_" \
 	LANG=C.UTF-8 \
 	JAVA_HOME=/usr/local/openjdk-8 \
-	PATH=/usr/local/openjdk-8/bin:/usr/local/openjdk-8/jre/bin:${PATH}
+	PATH="/usr/local/openjdk-8/bin:/usr/local/openjdk-8/jre/bin:${PATH}"
 
 LABEL \
 	"Version"="v8u242" \
@@ -31,32 +31,34 @@ RUN set -eux; \
 		dirmngr \
 		gnupg \
 		fontconfig libfreetype6 \
-		wget \
+		curl \
+		tzdata \
 	"; \
 	savedAptMark="$(apt-mark showmanual)"; \
 	apt install -y --no-install-recommends ${fetchDeps}; \
 	\
-	wget -O openjdk.tgz.asc "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz.sign"; \
-	wget -O openjdk.tgz "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz" --progress=dot:giga; \
+	curl --progress-bar -o openjdk.tgz.asc "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz.sign"; \
+	curl --progress-bar -o openjdk.tgz "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz" --progress=dot:giga; \
 	\
-# 安装软件包需要使用的GPG证书
+# 下载方式安装软件，使用GPG签名方式验证软件
+	export GPG_KEYS="0xEAC843EBD3EFDB98CC772FADA5CD6035332FA671"; \
 	export GNUPGHOME="$(mktemp -d)"; \
-# TODO find a good link for users to verify this key is right (https://mail.openjdk.java.net/pipermail/jdk-updates-dev/2019-April/000951.html is one of the only mentions of it I can find); perhaps a note added to https://adoptopenjdk.net/upstream.html would make sense?
-# no-self-sigs-only: https://salsa.debian.org/debian/gnupg2/commit/c93ca04a53569916308b369c8b218dad5ae8fe07
-	gpg --batch --keyserver ha.pool.sks-keyservers.net --keyserver-options no-self-sigs-only --recv-keys CA5F11C6CE22644D42C6AC4492EF8D39DC13168F; \
-# also verify that key was signed by Andrew Haley (the OpenJDK 8 and 11 Updates OpenJDK project lead)
-# (https://github.com/docker-library/openjdk/pull/322#discussion_r286839190)
-	gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys EAC843EBD3EFDB98CC772FADA5CD6035332FA671; \
-	gpg --batch --list-sigs --keyid-format 0xLONG CA5F11C6CE22644D42C6AC4492EF8D39DC13168F \
-		| tee /dev/stderr \
-		| grep '0xA5CD6035332FA671' \
-		| grep 'Andrew Haley'; \
+	for key in ${GPG_KEYS}; do \
+		gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "${key}"|| \
+		gpg --batch --keyserver pgp.mit.edu --recv-keys "${key}" || \
+		gpg --batch --keyserver keys.gnupg.net --recv-keys "${key}" || \
+		gpg --batch --keyserver keyserver.pgp.com --recv-keys "${key}"; \
+	done; \
 	gpg --batch --verify openjdk.tgz.asc openjdk.tgz; \
-	gpgconf --kill all; \
+	command -v gpgconf > /dev/null && gpgconf --kill all; \
 	rm -rf "$GNUPGHOME"; \
 	\
 	tar --extract --file openjdk.tgz --strip-components 1 --no-same-owner --directory "$JAVA_HOME"; \
 	rm openjdk.tgz*; \
+	\
+# 为中国区使用重新配置tzdata信息
+	ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime; \
+	dpkg-reconfigure -f noninteractive tzdata; \
 	\
 # update "cacerts" bundle to use Debian's CA certificates (and make sure it stays up-to-date with changes to Debian's store)
 	{ \
