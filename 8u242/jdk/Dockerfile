@@ -2,9 +2,11 @@ FROM colovu/ubuntu:18.04
 
 ENV JAVA_VERSION=8u242 \
 	JAVA_URL_VERSION=8u242b08 \
-	JAVA_BASE_URL="https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u242-b08/OpenJDK8U-jdk_" \
 	LANG=C.UTF-8 \
-	JAVA_HOME=/usr/local/openjdk-8 \
+	JAVA_HOME=/usr/local/openjdk-8
+
+ENV JDK_HOME="${JAVA_HOME}" \
+	CLASSPATH="${JAVA_HOME}/lib:${CLASSPATH}" \
 	PATH="/usr/local/openjdk-8/bin:${PATH}"
 
 LABEL \
@@ -37,6 +39,7 @@ RUN set -eux; \
 	savedAptMark="$(apt-mark showmanual)"; \
 	apt install -y --no-install-recommends ${fetchDeps}; \
 	\
+	JAVA_BASE_URL="https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u242-b08/OpenJDK8U-jdk_"; \
 	curl --progress-bar -L -o openjdk.tgz.asc "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz.sign"; \
 	curl --progress-bar -L -o openjdk.tgz "${JAVA_BASE_URL}x64_linux_${JAVA_URL_VERSION}.tar.gz"; \
 	\
