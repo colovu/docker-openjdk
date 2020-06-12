@@ -1,14 +1,16 @@
 # 简介
 
-OpenJDK 1.8 (8u242) 版本基于的Ubuntu系统的Docker镜像。
+OpenJDK 基于Ubuntu系统的Docker镜像。
 
 **JDK 版本信息：**
 
+- 11、11.0.7-jdk、latest
 - 1.8、8u252-jdk
 - 1.8、8u242-jdk
 
 **JRE 版本信息：**
 
+- 11、11.0.7-jre、latest
 - 1.8、8u252-jre
 - 1.8、8u242-jre
 
@@ -28,7 +30,11 @@ OpenJDK 1.8 (8u242) 版本基于的Ubuntu系统的Docker镜像。
 基本验证命令：
 
 ```shell
-docker run -it --rm colovu/openjdk:latest javac -version
+# 11之前的版本
+$ docker run -it --rm colovu/openjdk:latest javac -version
+
+# 11之后的版本
+$ docker run -it --rm colovu/openjdk:latest javac --version
 ```
 
 
