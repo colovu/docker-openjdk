@@ -119,6 +119,9 @@ RUN set -eux; \
 	apt-get autoclean -y; \
 	rm -rf /var/lib/apt/lists/*; \
 	\
+# 解决应用安装jre-headless时错误：update-alternatives: error: error creating symbolic link '/usr/share/man/man
+	mkdir -p /usr/share/man/man1; \
+	\
 # 验证安装的软件是否可以正常运行，常规情况下放置在命令行的最后
 	javac --version; \
 	java --version;

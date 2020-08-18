@@ -8,13 +8,13 @@
 
 **JDK 版本信息：**
 
-- 11-jdk、11.0.7-jdk、latest
+- 11-jdk、11.0.7-jdk、latest-jdk
 - 8-jdk、8u252-jdk
 - 8u242-jdk
 
 **JRE 版本信息：**
 
-- 11-jre、11.0.7-jre、latest
+- 11-jre、11.0.7-jre、latest-jre
 - 8-jre、8u252-jre
 - 8u242-jre
 

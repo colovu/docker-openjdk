@@ -112,12 +112,15 @@ RUN set -eux; \
 		| xargs -r dpkg-query --search \
 		| cut -d: -f1 \
 		| sort -u \
-		| xargs -r apt-mark manual; \
+		| xargs -r apt-mark manual; \man
 		\
 # 删除临时软件包，清理缓存
 	apt-get purge -y --auto-remove --force-yes -o APT::AutoRemove::RecommendsImportant=false ${fetchDeps}; \
 	apt-get autoclean -y; \
 	rm -rf /var/lib/apt/lists/*; \
+	\
+# 解决应用安装jre-headless时错误：update-alternatives: error: error creating symbolic link '/usr/share/man/man
+	mkdir -p /usr/share/man/man1; \
 	\
 # 验证安装的软件是否可以正常运行，常规情况下放置在命令行的最后
 	java --version;
