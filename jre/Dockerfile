@@ -112,7 +112,7 @@ RUN set -eux; \
 		| xargs -r dpkg-query --search \
 		| cut -d: -f1 \
 		| sort -u \
-		| xargs -r apt-mark manual; \man
+		| xargs -r apt-mark manual; \
 		\
 # 删除临时软件包，清理缓存
 	apt-get purge -y --auto-remove --force-yes -o APT::AutoRemove::RecommendsImportant=false ${fetchDeps}; \
