@@ -8,19 +8,11 @@
 
 **JDK 版本信息：**
 
-- 11-jdk、11.0.7-jdk、latest-jdk
-- 8-jdk、8u252-jdk
-- 8u242-jdk
-
-**JRE 版本信息：**
-
-- 11-jre、11.0.7-jre、latest-jre
-- 8-jre、8u252-jre
-- 8u242-jre
+- 8u262
 
 **镜像信息：**
 
-- 镜像地址：colovu/openjdk:latest
+- 镜像地址：registry.cn-shenzhen.aliyuncs.com/colovu/openjdk:latest
 
   
 
@@ -30,10 +22,10 @@
 
 ```shell
 # 11之前的版本
-$ docker run -it --rm colovu/openjdk:8-jdk javac -version
+$ docker run -it --rm registry.cn-shenzhen.aliyuncs.com/colovu/openjdk javac -version
 
 # 11之后的版本
-$ docker run -it --rm colovu/openjdk:latest javac --version
+$ docker run -it --rm registry.cn-shenzhen.aliyuncs.com/colovu/openjdk javac --version
 ```
 
 

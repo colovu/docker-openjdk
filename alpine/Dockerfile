@@ -28,6 +28,9 @@ FROM ${registry_url}/colovu/alpine:3.12
 # sources.list 可使用版本：default / tencent / ustc / aliyun / huawei
 ARG apt_source=aliyun
 
+# 编译镜像时指定用于加速的本地服务器地址
+ARG local_url=""
+
 ENV APP_NAME=openjdk8 \
 	APP_VERSION=8u262-b10
 
