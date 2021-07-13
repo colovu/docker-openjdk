@@ -65,7 +65,8 @@ ENV JAVA_HOME=/usr/local/${APP_NAME} \
 	JRE_HOME=/usr/local/${APP_NAME}/jre
 
 ENV PATH="${JAVA_HOME}/bin:${JAVA_HOME}/jre/bin:${PATH}" \
-	CLASSPATH=".:${JAVA_HOME}/lib:${JAVA_HOME}/jre/lib"
+	CLASSPATH=".:${JAVA_HOME}/lib:${JAVA_HOME}/jre/lib" \
+	LANG=zh_CN.UTF-8
 
 LABEL \
 	"Version"="v${app_version}" \
